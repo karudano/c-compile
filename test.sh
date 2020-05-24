@@ -16,19 +16,8 @@ assert() {
   fi
 }
 
-assert 85 "5+20*4"
-assert 41 " 12 + 34 - 5  "
-assert 31 "2*3 + (2 + 3)*5"
-assert 11 "2*3 + 3/2*5"
-assert 10 "-4+14"
-assert 18 "-3*(-1-5)"
-assert 1 "1 != 2"
-assert 1 "1 <= 2"
-assert 1 "1 == 1"
-assert 0 "-1 >= 2"
-assert 0 "1 < 1"
-assert 1 "30 > 2*(3+4)"
-assert 1 "1+3 == 2+2"
-assert 0 "-3*4+4 >= (2+2)*4/10"
-assert 1 "-3*4 == -2*-2*-3"
+assert 85 "5+20*4;"
+assert 72 "a = 3*4;b = 6;a*b;"
+assert 19 "a = 4;b = 9;a+b+6;"
+assert 10 "a+4 = 3;"
 echo OK
