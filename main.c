@@ -2,6 +2,7 @@
 
 Token *token;
 char *user_input;
+LVar *locals;
 
 int main(int argc,char **argv){
     if (argc != 2){
@@ -10,6 +11,9 @@ int main(int argc,char **argv){
     }
 
     user_input = argv[1];
+    locals = calloc(1,sizeof(LVar));
+    locals->next = NULL;
+    locals->offset = 0;
     token = tokenize(argv[1]);
     program();
 
@@ -19,7 +23,7 @@ int main(int argc,char **argv){
 
     printf("    push rbp\n");
     printf("    mov rbp, rsp\n");
-    printf("    sub rsp, 208\n");
+    printf("    sub rsp, 1000\n");
 
     for (int i = 0;code[i];i++){
         gen(code[i]);

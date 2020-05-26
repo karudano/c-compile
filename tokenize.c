@@ -13,6 +13,9 @@ int check(char *p,char *q){
     return memcmp(p,q,strlen(q)) == 0;
 }
 
+bool issalpha(char *p){
+    return 'a' <= *p && *p <= 'z';
+}
 Token *tokenize(char *p){
     Token head;
     head.next = NULL;
@@ -35,8 +38,13 @@ Token *tokenize(char *p){
             continue;
         }
 
-        if (('a' <= *p) && (*p <= 'z')){
-            cur = new_token(TK_IDENT,cur,p++,1);
+        if (issalpha(p)){
+            int len = 0;
+            while(issalpha(p)){
+                p++;
+                len++;
+            }
+            cur = new_token(TK_IDENT,cur,p-len,len);
             continue;
         }
 

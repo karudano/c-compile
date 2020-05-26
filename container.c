@@ -40,8 +40,6 @@ int expect_number(){
     return val;
 }
 
-
-
 bool at_eof(){
     return token->kind == TK_EOF;
 }
