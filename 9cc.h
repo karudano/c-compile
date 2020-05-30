@@ -7,6 +7,7 @@
 
 typedef enum {
     TK_RESERVED,
+    TK_RETURN,
     TK_IDENT,
     TK_NUM,
     TK_EOF,
@@ -24,6 +25,7 @@ typedef enum{
     ND_LE, // <=
     ND_ASSIGN, // =
     ND_LVAR,
+    ND_RETURN, //return
 } NodeKind;
 
 typedef struct Token Token;
@@ -68,6 +70,7 @@ bool at_eof();
 Token *new_token(TokenKind kind,Token* cur,char* str,int len);
 int check(char* p,char* q);
 bool issalpha(char *p);
+bool is_alnum(char c);
 Token *tokenize(char* p);
 
 Node *new_node(NodeKind kind,Node* lhs,Node* rhs);

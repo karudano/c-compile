@@ -21,4 +21,5 @@ assert 72 "a = 3*4;b = 6;a*b;"
 assert 19 "a = 4;b = 9;a+b+6;"
 assert 10 "count = 3;2*count+4;"
 assert 14 "count = 10;plus = 4;count+plus;"
+assert 4 "return 4;4+6;return 6;"
 echo OK
