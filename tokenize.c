@@ -38,6 +38,18 @@ Token *tokenize(char *p){
             continue;
         }
 
+        if (strncmp(p,"if",2) == 0 && !is_alnum(p[2])){
+            cur = new_token(TK_IF,cur,p,2);
+            p += 2;
+            continue;
+        }
+
+        if (strncmp(p,"else",4) == 0 && !is_alnum(p[4])){
+            cur = new_token(TK_ELSE,cur,p,4);
+            p += 4;
+            continue;
+        }
+
         if (check(p,"==") || check(p,"!=") || check(p,"<=") || check(p,">=")){
             cur = new_token(TK_RESERVED,cur,p,2);
             p += 2;

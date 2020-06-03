@@ -1,4 +1,5 @@
 #include "9cc.h"
+long serial = 0;
 
 void gen_lval(Node *node){
     if (node->kind != ND_LVAR) fprintf(stderr,"代入の左辺値が変数ではありません");
@@ -8,13 +9,34 @@ void gen_lval(Node *node){
 }
 
 void gen(Node *node){
-    if (node->kind == ND_RETURN){
-        gen(node->lhs);
-        printf("    pop rax\n");
-        printf("    mov rsp, rbp\n");
-        printf("    pop rbp\n");
-        printf("    ret\n");
-        return;
+    switch(node->kind){
+        case ND_RETURN:
+            gen(node->lhs);
+            printf("    pop rax\n");
+            printf("    mov rsp, rbp\n");
+            printf("    pop rbp\n");
+            printf("    ret\n");
+            return;
+        case ND_IF:
+            gen(node->cond);
+            printf("    pop rax\n");
+            printf("    cmp rax, 0\n");
+            if (node->els){
+                printf("    je  .Lelse%ld\n",serial);
+                gen(node->then);
+                printf("    jmp .Lend%ld\n",serial);
+                printf(".Lelse%ld:\n",serial);
+                gen(node->els);
+                printf(".Lend%ld:\n",serial);
+                serial++;
+            }
+            else{
+                printf("    je  .Lend%ld\n",serial);
+                gen(node->then);
+                printf(".Lend%ld:\n",serial);
+                serial++;
+            }
+            return;
     }
 
     switch(node -> kind){

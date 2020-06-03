@@ -19,6 +19,12 @@ bool consume(char *op){
     return true;
 }
 
+bool consume_kind(NodeKind k){
+    if (token->kind != k) return false;
+    token = token->next;
+    return true;
+}
+
 Token *consume_ident(){
     if (token->kind != TK_IDENT) return NULL;
     Token *t = token;

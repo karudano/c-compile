@@ -38,11 +38,27 @@ Node *stmt(){
         node = calloc(1,sizeof(Node));
         node->kind = ND_RETURN;
         node->lhs = expr();
+        expect(";");
+    }
+    else if (token->kind == TK_IF){
+        token = token->next;
+        node = calloc(1,sizeof(Node));
+        node->kind = ND_IF;
+        expect("(");
+        node->cond = expr();
+        expect(")");
+        node->then = stmt();
+        if (consume_kind(TK_ELSE)){
+            node->els = stmt();
+        }
+        else{
+            node->els = NULL;
+        }
     }
     else{
         node = expr();
+        expect(";");
     }
-    expect(";");
     return node;
 }
 

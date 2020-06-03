@@ -8,6 +8,8 @@
 typedef enum {
     TK_RESERVED,
     TK_RETURN,
+    TK_IF,
+    TK_ELSE,
     TK_IDENT,
     TK_NUM,
     TK_EOF,
@@ -24,8 +26,10 @@ typedef enum{
     ND_LT, // <
     ND_LE, // <=
     ND_ASSIGN, // =
-    ND_LVAR,
-    ND_RETURN, //return
+    ND_LVAR,// left value
+    ND_RETURN, // return
+    ND_IF,// if
+    ND_ELSE, //else
 } NodeKind;
 
 typedef struct Token Token;
@@ -44,6 +48,12 @@ struct Node {
     NodeKind kind;
     Node *lhs;
     Node *rhs;
+
+    // if statement
+    Node *cond;
+    Node *then;
+    Node *els;
+
     int val;
     int offset;
 };
@@ -58,10 +68,12 @@ struct LVar {
 extern Token *token;
 extern char *user_input;
 extern LVar *locals;
+extern long serial;
 
 //fuction
 void error_at(char *loc,char *fmt,...);
 bool consume(char *op);
+bool consume_kind(NodeKind a);
 Token *consume_ident();
 void expect(char *op);
 int expect_number();
