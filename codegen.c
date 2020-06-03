@@ -37,6 +37,17 @@ void gen(Node *node){
                 serial++;
             }
             return;
+        case ND_WHILE:
+            printf(".Lbegin%ld:\n",serial);
+            gen(node->cond);
+            printf("    pop rax\n");
+            printf("    cmp rax, 0\n");
+            printf("    je  .Lend%ld\n",serial);
+            gen(node->then);
+            printf("    jmp .Lbegin%ld:\n",serial);
+            printf(".Lend%ld:\n",serial);
+            serial++;
+            return;
     }
 
     switch(node -> kind){

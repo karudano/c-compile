@@ -55,6 +55,15 @@ Node *stmt(){
             node->els = NULL;
         }
     }
+    else if (token->kind == TK_WHILE){
+        token = token->next;
+        node = calloc(1,sizeof(Node));
+        node->kind = ND_WHILE;
+        expect("(");
+        node->cond = expr();
+        expect(")");
+        node->then = stmt();
+    }
     else{
         node = expr();
         expect(";");

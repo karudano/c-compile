@@ -25,12 +25,26 @@ Token *tokenize(char *p){
     Token head;
     head.next = NULL;
     Token *cur = &head;
+    static char* kw[] = {"return","if","else","while"};
+    static TokenKind kwk[] = {TK_RETURN,TK_IF,TK_ELSE,TK_WHILE};
 
     while(*p){
         if (isspace(*p)){
             p++;
             continue;
         }
+
+        bool con = 0;
+        for (int i = 0;i < sizeof(kw)/sizeof(*kw);i++){
+            int len = strlen(kw[i]);
+            if (strncmp(p,kw[i],len) == 0 && !is_alnum(*(p+len))){
+                cur = new_token(kwk[i],cur,p,len);
+                p += len;
+                con = 1;
+                break;
+            }
+        }
+        if (con) continue;
 
         if (strncmp(p,"return",6) == 0 && !is_alnum(p[6])){
             cur = new_token(TK_RETURN,cur,p,6);
@@ -47,6 +61,12 @@ Token *tokenize(char *p){
         if (strncmp(p,"else",4) == 0 && !is_alnum(p[4])){
             cur = new_token(TK_ELSE,cur,p,4);
             p += 4;
+            continue;
+        }
+
+        if (strncmp(p,"while",5) == 0 && !is_alnum(p[5])){
+            cur = new_token(TK_ELSE,cur,p,5);
+            p += 5;
             continue;
         }
 

@@ -25,4 +25,7 @@ assert 4 "return 4;4+6;return 6;"
 assert 3 "count = 1;if (count) return 3;else return 4;"
 assert 4 "count = 0;if (count) return 3;else return 4;"
 assert 4 "if (0) a = 1;else a = 0;if (a) return 3;else return 4;"
+assert 4 "if (1) return 4;a = 3;return a;"
+assert 3 "if (0) return 4;a = 3;return a;"
+assert 3 "a = 0;while (a != 3) a = a+1;return a;"
 echo OK
