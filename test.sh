@@ -28,4 +28,5 @@ assert 4 "if (0) a = 1;else a = 0;if (a) return 3;else return 4;"
 assert 4 "if (1) return 4;a = 3;return a;"
 assert 3 "if (0) return 4;a = 3;return a;"
 assert 3 "a = 0;while (a != 3) a = a+1;return a;"
+assert 10 "a = 0;for (i = 0;i < 5;i = i+1) a = a+2;return a;"
 echo OK

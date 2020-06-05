@@ -25,8 +25,8 @@ Token *tokenize(char *p){
     Token head;
     head.next = NULL;
     Token *cur = &head;
-    static char* kw[] = {"return","if","else","while"};
-    static TokenKind kwk[] = {TK_RETURN,TK_IF,TK_ELSE,TK_WHILE};
+    static char* kw[] = {"return","if","else","while","for"};
+    static TokenKind kwk[] = {TK_RETURN,TK_IF,TK_ELSE,TK_WHILE,TK_FOR};
 
     while(*p){
         if (isspace(*p)){

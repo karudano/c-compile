@@ -64,6 +64,25 @@ Node *stmt(){
         expect(")");
         node->then = stmt();
     }
+    else if (token->kind == TK_FOR){
+        token = token->next;
+        node = calloc(1,sizeof(Node));
+        node->kind = ND_FOR;
+        expect("(");
+        if (!consume(";")){
+            node->fst = expr();
+            expect(";");
+        }
+        if (!consume(";")){
+            node->cond = expr();
+            expect(";");
+        }
+        if (!consume(")")){
+            node->nxt = expr();
+            expect(")");
+        }
+        node->then = stmt();
+    }
     else{
         node = expr();
         expect(";");
