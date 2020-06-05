@@ -26,6 +26,7 @@ Token *tokenize(char *p){
     head.next = NULL;
     Token *cur = &head;
     static char* kw[] = {"return","if","else","while","for"};
+    static char single[] = "+-*/<>()=;{}";
     static TokenKind kwk[] = {TK_RETURN,TK_IF,TK_ELSE,TK_WHILE,TK_FOR};
 
     while(*p){
@@ -76,10 +77,14 @@ Token *tokenize(char *p){
             continue;
         }
 
-        if (*p == '+' || *p == '-' || *p == '*' || *p == '/' || *p == '<' || *p == '>' || *p == '+' || *p == '(' || *p == ')' || *p == '=' || *p == ';'){
-            cur = new_token(TK_RESERVED,cur,p++,1);
-            continue;
+        for (int i = 0;i < sizeof(single)/sizeof(*single);i++){
+            if (*p == single[i]){
+                cur = new_token(TK_RESERVED,cur,p++,1);
+                con = 1;
+                break;
+            }
         }
+        if (con) continue;
 
         if (issalpha(p)){
             int len = 0;

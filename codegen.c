@@ -73,6 +73,11 @@ void gen(Node *node){
             printf("    mov rax, [rax]\n");
             printf("    push rax\n");
             return;
+        case ND_BLOCK:
+            for (Node *i = node->block;i;i = i->next){
+                gen(i);
+            }
+            return;
         case ND_ASSIGN:
             gen_lval(node->lhs);
             gen(node->rhs);
